@@ -18,7 +18,7 @@ module.exports = function (app, passport) {
 		});
 
 	app.route('/login')
-		.get(function (req, res) {
+		.get(isLoggedIn, function (req, res) {
 			res.sendFile(path + '/public/login.html');
 		});
 
@@ -44,8 +44,9 @@ module.exports = function (app, passport) {
 	app.route('/auth/github/callback')
 		.get(passport.authenticate('github', {
 			successRedirect: '/',
-			failureRedirect: '/login'
+			failureRedirect: '/#failed'
 		}));
+    
     app.route('/*')
         .get(function(req, res) {
             res.sendFile(path + '/public/index.html');

@@ -53,6 +53,7 @@ angular.module('nightLife')
     $scope.removeMe = function(index){
         $scope.events[index].going -= 1;
     };
+    
 //    $http.get('/api/things').success(function(awesomeThings) {
 //      $scope.awesomeThings = awesomeThings;
 //    });
