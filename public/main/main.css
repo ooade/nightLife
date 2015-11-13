@@ -1,0 +1,26 @@
+body{
+    background-image:url(../img/nightlife_new.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-attachment: fixed;
+}
+.loader{
+    display: none;
+}
+.footer {
+    text-align: center;
+    position: relative;
+    padding-top: 50px;
+    margin-top: 150px;
+    color: #fff;
+}
+.form-search{
+    position: relative;
+    margin-top: 250px;
+}
+.box-header .box-title{
+    font-size: 14px;
+}
+.navbar-text {
+    margin-left: 15px;
+}

@@ -1,0 +1,29 @@
+{
+  "name": "nightLife",
+  "description": "Nightlife App for FreeCodeCamp BaseJump",
+  "main": "server.js",
+  "authors": [
+    "Adegbuyi Ademola"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "MongoDB",
+    "Mongoose",
+    "full",
+    "stack",
+    "Express",
+    "Node",
+    "javascript",
+    "boilerplate"
+  ],
+  "homepage": "https://github.com/johnstonbl01/clementinejs-fcc",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
