@@ -43,10 +43,7 @@ angular.module('nightLife')
     $scope.addMe = function(index){
         $scope.events[index].going += 1;
 //        if(Auth.getCurrentUser().name === undefined){
-//            $('.modal').show();
-//            $scope.oauth = function(provider) {
-//              $window.location.href = '/auth/' + provider;
-//            };
+              $window.location.href = '/auth/github';
 //        }
     };
     
