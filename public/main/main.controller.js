@@ -4,7 +4,6 @@ angular.module('nightLife')
 .controller('MainCtrl', function ($scope, $http, $window) {
     $scope.events = [];
     $scope.myEvents = {};
-//    $scope.getCurrentUser = Auth.getCurrentUser;
     $('.loader').hide();
     
     $scope.dismiss = (function(){
@@ -39,12 +38,21 @@ angular.module('nightLife')
         });
     });   
     };
-
+    
+    $http({
+        url:'api/id',
+        method:'GET'
+    }).success(function(data) {
+        $scope.userInfo = data;
+    });
+    
     $scope.addMe = function(index){
-        $scope.events[index].going += 1;
-//        if(Auth.getCurrentUser().name === undefined){
-              $window.location.href = '/auth/github';
-//        }
+        if($scope.userInfo.username === undefined){
+              $window.location.href = '/auth/github'; 
+        }
+        else{
+              $scope.events[index].going += 1;
+        }
     };
     
     $scope.removeMe = function(index){
