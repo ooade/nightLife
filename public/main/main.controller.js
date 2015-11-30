@@ -108,11 +108,4 @@ angular.module('nightLife')
             });
         });
     };
-    
-//    $http.get('/api/things').success(function(awesomeThings) {
-//      $scope.awesomeThings = awesomeThings;
-//    });
-//    $scope.deleteThing = function(thing) {
-//      $http.delete('/api/things/' + thing._id);
-//    };
   });

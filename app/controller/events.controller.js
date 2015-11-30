@@ -33,7 +33,6 @@ exports.deleteGoing = function(req, res) {
         if(err) {throw err;}
         event.remove(function(err){
             if(err) {throw err;}
-             console.log("removed");
              res.json(event);
         })
     });
