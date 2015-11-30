@@ -1,0 +1,72 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+        <div class="modal modal-success alertBox" ng-show="userInfo">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Event Added Successfully <span class="glyphicon glyphicon-ok"></span></h4>
+              </div>
+              <div class="modal-body">
+                <p>You just added {{alertBox}} to your events</p>
+                <p><button class="btn btn-outline viewAll"> Click to view all events</button> <button class="btn btn-danger modalClose"> Close</button></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal modal-success events">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Your Events <span class="glyphicon glyphicon-cog"></span></h4>
+              </div>
+              <div class="modal-body">
+                    <p ng-if="myEvents.length === 0">No Events</p>
+                    <div class="repeats" ng-repeat="event in myEvents">
+                    <p>{{event.place}} <button ng-click="removeMe(event.eventId)" class="btn btn-outline"> Remove Me <span class="glyphicon glyphicon-remove"></span></button> </p>
+                    </div>
+                    <button class="btn btn-danger modalClose"> Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+            <form class="form-group form-search" ng-submit="submit(location)" novalidate>
+              <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                  <input ng-model="location" type="text" class="form-control" placeholder="Enter your location...." autofocus required>
+                  <span class="input-group-btn">
+                      <button class="btn btn-info btn-flat">Search</button>
+                  </span>
+              </div>
+            </form>
+            <button ng-click="login()" ng-hide="loggingIn" class="btn btn-flat btn-social btn-github center-block" data-toggle="tooltip" data-placement="right" title="This shows because you arent logged in">
+             <i class="fa fa-github"></i> Sign in with GitHub</button>
+            <div class="loader" ng-include="'main/poi.html'"></div>
+            <div class="results" style="margin-top:-150px;">
+                <div class="box box-success" style="border-radius:0px" ng-repeat="venue in events">
+                    <div class="box-header with-border">
+                        <img ng-src='{{venue.categories[0].icon.prefix+"bg_88"+venue.categories[0].icon.suffix}}' width="20px"/>
+                        <a href="{{venue.url}}" target="_blank"><b class="box-title">{{venue.name}}</b></a>
+                    </div>
+                    <div class="box-body">  
+                        <div class="container-fluid">
+                            <div class="btn btn-flat btn-default btn-sm" ng-click="addMe($index)">Add Me <i class="fa fa-hand-spock-o"/></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+      <p>FreeCodeCamp BaseJump 2 |
+        <a href="httpS//freecodecamp.com/marhyorh">@marhyorh</a> |
+         <a href="https://github.com/marhyorh/fcc-night-life-CA/issues?state=open">Issues</a></p>
+  </div>
+</footer>

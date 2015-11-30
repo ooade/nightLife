@@ -3,7 +3,6 @@
 var path = process.cwd();
 
 module.exports = function (app, passport) {
-
 	function isLoggedIn (req, res, next) {
 		if (req.isAuthenticated()) {
 			return next();
@@ -32,7 +31,18 @@ module.exports = function (app, passport) {
 //		.get(isLoggedIn, function (req, res) {
 //			res.sendFile(path + '/public/profile.html');
 //		});
-
+	app.post('/api/events', function (req, res) {
+		    require('../controller/events.controller').newEvent(req, res);
+		});
+		
+	app.get('/api/events/:username', function (req, res) {
+		    require('../controller/events.controller').checkGoing(req, res);
+		});
+		
+	app.delete('/api/events/:username/:id', function (req, res) {
+	    require('../controller/events.controller').deleteGoing(req, res);
+	});
+		
 	app.route('/api/:id')
 		.get(isLoggedIn, function (req, res) {
 			res.json(req.user.github);

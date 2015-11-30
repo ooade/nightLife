@@ -19,11 +19,12 @@
     "boilerplate"
   ],
   "scripts": {
-  "start": "node server.js"
+    "start": "node server.js"
   },
   "author": "Adegbuyi Ademola",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.14.1",
     "dotenv": "^1.2.0",
     "express": "^4.12.4",
     "express-session": "^1.11.3",
@@ -31,8 +32,8 @@
     "passport": "^0.3.0",
     "passport-github": "^1.0.0"
   },
-   "engines": {
-   "node": "0.10.25",
-   "npm": "3.3.10"
-   }
+  "engines": {
+    "node": "0.10.25",
+    "npm": "3.3.10"
+  }
 }

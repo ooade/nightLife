@@ -1,19 +1,30 @@
 'use strict';
 
 angular.module('nightLife')
-.controller('MainCtrl', function ($scope, $http, $window) {
+.controller('MainCtrl', function ($scope, $cookies, $http, $window) {
     $scope.events = [];
-    $scope.myEvents = {};
-    $('.loader').hide();
+    $scope.myEvents = [];
+    $('.loader').hide(); 
+    $scope.loggingIn = false;
+    $scope.events = [];
+    $scope.userInfo;
+    $scope.alertBox;
     
-    $scope.dismiss = (function(){
-        $('.modal').hide();
+    $http({
+        url:'/api/id',
+        method:'GET'
+    }).success(function(data) {
+    if(data.username){
+        $scope.userInfo = data;
+        $scope.loggingIn = true;
+        $cookies.remove('search');
+     }
     });
     
     $scope.submit = function(location){  
-    $scope.events = [];
     $('.loader').show();
     $('.form-search').animate({top:'-200px'},"slow");
+    $cookies.put('search',location);
     $http({
         url:'https://api.foursquare.com/v2/venues/search',
         method:'GET',
@@ -27,36 +38,75 @@ angular.module('nightLife')
     }).success(function(data) {  
         $('.loader').hide();
         console.log("fetched");
-        angular.forEach(data.response.venues,function(venue){
-            $scope.events.push({
-                id: venue.id,
-                name: venue.name,
-                icon: venue.categories[0].icon.prefix+"bg_88"+venue.categories[0].icon.suffix,
-                url: "https://foursquare.com/v/"+venue.id,
-                going: 0
+        $scope.events = data.response.venues;
+        if($scope.userInfo !== undefined){
+        var username = $scope.userInfo.username;
+        $http.get('/api/events/' + username)
+        .success(function(data2){
+          $scope.myEvents = data2;
+          $scope.subArray = function (arr1,arr2){
+            return arr2.filter(function(value){
+                return arr1.filter(function(value2){
+                    return value.id === value2.eventId;
+                }).length===0;
             });
-        });
-    });   
+        };
+        $scope.events = $scope.subArray($scope.myEvents,$scope.events);
+        console.log("ammended");
+          });
+        }
+        
+        
+        });   
+    };
+
+    $scope.login = function(){
+        $window.location.href = '/auth/github';
     };
     
-    $http({
-        url:'api/id',
-        method:'GET'
-    }).success(function(data) {
-        $scope.userInfo = data;
-    });
+    if($cookies.get('search') !== undefined && $scope.userInfo === undefined){
+        $scope.submit($cookies.get('search'));
+        $scope.location = $cookies.get('search');
+    }
     
     $scope.addMe = function(index){
-        if($scope.userInfo.username === undefined){
-              $window.location.href = '/auth/github'; 
-        }
-        else{
-              $scope.events[index].going += 1;
-        }
+        if($scope.userInfo !== undefined){
+            var eventId = $scope.events[index].id;
+            var username = $scope.userInfo.username;
+            var place = $scope.events[index].name;
+            $scope.myEvents.push({eventId:eventId, username:username, place:place});
+            
+            $http.post('/api/events', {eventId:eventId, username:username, place:place})
+                .success(function(data){
+                    $scope.alertBox = place;
+                    $('.alertBox').show();
+                    $cookies.remove('search');
+                    $scope.events.splice(index, 1);
+                    console.log("data submitted and cookies removed");
+                });
+            }else{
+                alert("Redirecting to GitHub...");
+                $scope.login();
+            }
     };
     
-    $scope.removeMe = function(index){
-        $scope.events[index].going -= 1;
+    $('.viewAll').click(function(){
+       $('.events').show(); 
+       $('.alertBox').fadeOut(); 
+    });
+    
+    $('.modalClose').click(function(){
+        $('.modal').hide();
+    })
+    
+    $scope.removeMe = function(id){
+        $http.delete('/api/events/' + $scope.userInfo.username + "/" + id).success(function(){
+            angular.forEach($scope.myEvents, function(x, i){
+               if(x.eventId === id){
+                   $scope.myEvents.splice(i, 1);
+               } 
+            });
+        });
     };
     
 //    $http.get('/api/things').success(function(awesomeThings) {
