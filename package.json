@@ -19,7 +19,9 @@
     "boilerplate"
   ],
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": "Adegbuyi Ademola",
   "license": "MIT",
@@ -30,10 +32,12 @@
     "express-session": "^1.11.3",
     "mongoose": "^4.1.0",
     "passport": "^0.3.0",
-    "passport-github": "^1.0.0"
+    "passport-github": "^1.0.0",
+    "snyk": "^1.189.0"
   },
   "engines": {
     "node": "0.10.25",
     "npm": "3.3.10"
-  }
+  },
+  "snyk": true
 }
